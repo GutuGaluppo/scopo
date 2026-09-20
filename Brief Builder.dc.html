@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-3e90602e-eae3-4344-8273-550feb82a32a/styles.css">
+<script src="_ds/modernist-3e90602e-eae3-4344-8273-550feb82a32a/_ds_bundle.js"></script>
+<style>
+  body { margin:0; background:#f3f2f2; }
+  @keyframes riseIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+  a { color:#4340c4; }
+  a:hover { color:#2f2ca0; }
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="background:#f3f2f2; color:#201e1d; font-family:Archivo, system-ui, sans-serif; min-height:100%; display:flex; flex-direction:column">
+
+  <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1; display:flex; flex-direction:column; min-height:100vh">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 40px; border-bottom:2px solid rgba(32,30,29,.4)">
+        <div style="display:flex; align-items:baseline; gap:10px">
+          <span style="font-weight:800; font-size:15px; letter-spacing:.14em; text-transform:uppercase">Brief Builder</span>
+          <span style="font-size:12px; color:#7d7979; letter-spacing:.08em; text-transform:uppercase">v0.1</span>
+        </div>
+        <button onClick="{{ toggleLang }}" style="font-family:Archivo; font-weight:800; font-size:12px; letter-spacing:.1em; text-transform:uppercase; background:transparent; border:1px solid rgba(32,30,29,.3); padding:7px 12px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">{{ langLabel }}</button>
+      </div>
+
+      <div style="{{ startGridStyle }}">
+        <div style="{{ startHeroStyle }}">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#4340c4; margin-bottom:24px">{{ startKicker }}</div>
+          <h1 style="{{ startTitleStyle }}">{{ startTitle }}</h1>
+          <p style="font-size:18px; line-height:1.55; color:#444141; max-width:52ch; margin:0 0 36px; text-wrap:pretty">{{ startBody }}</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap">
+            <button onClick="{{ start }}" style="font-family:Archivo; font-weight:800; font-size:15px; background:#4340c4; color:#fff; border:0; padding:16px 26px; cursor:pointer; display:flex; align-items:center; gap:10px" style-hover="background:#2f2ca0">{{ startCta }}<span style="font-size:18px; line-height:1">→</span></button>
+            <button onClick="{{ demo }}" style="font-family:Archivo; font-weight:800; font-size:15px; background:transparent; color:#201e1d; border:1px solid rgba(32,30,29,.3); padding:16px 22px; cursor:pointer" style-hover="background:rgba(32,30,29,.07)">{{ demoCta }}</button>
+          </div>
+          <div style="margin-top:44px; display:flex; gap:28px; flex-wrap:wrap; font-size:13px; color:#605d5d">
+            <span>{{ startMeta1 }}</span><span>{{ startMeta2 }}</span><span>{{ startMeta3 }}</span>
+          </div>
+        </div>
+
+        <div style="{{ startListStyle }}">
+          <sc-for list="{{ startSteps }}" as="s" hint-placeholder-count="4">
+            <div style="flex:1; padding:28px 36px; border-bottom:1px solid rgba(32,30,29,.18); display:flex; gap:20px; align-items:flex-start">
+              <span style="font-size:12px; font-weight:800; color:#4340c4; letter-spacing:.08em; padding-top:4px">{{ s.n }}</span>
+              <div>
+                <div style="font-weight:800; font-size:17px; margin-bottom:4px">{{ s.t }}</div>
+                <div style="font-size:14px; color:#605d5d; line-height:1.5; max-width:44ch">{{ s.d }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isApp }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex; flex:1; align-items:stretch; min-height:100vh">
+
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <aside style="width:292px; flex:none; border-right:2px solid rgba(32,30,29,.4); background:#f3f2f2; position:sticky; top:0; align-self:flex-start; height:100vh; display:flex; flex-direction:column">
+          <div style="padding:22px 24px 18px; border-bottom:1px solid rgba(32,30,29,.18)">
+            <div style="font-weight:800; font-size:14px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:16px">Brief Builder</div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#605d5d; margin-bottom:7px">
+              <span>{{ progressLabel }}</span><span style="font-weight:800; color:#201e1d">{{ progressPct }}</span>
+            </div>
+            <div style="height:6px; background:rgba(32,30,29,.15)">
+              <div style="height:6px; background:#4340c4; transition:width .3s; width:{{ progressWidth }}"></div>
+            </div>
+          </div>
+          <nav style="flex:1; overflow:auto; padding:8px 0">
+            <sc-for list="{{ navSteps }}" as="s" hint-placeholder-count="16">
+              <button onClick="{{ s.go }}" style="{{ s.style }}">
+                <span style="{{ s.numStyle }}">{{ s.num }}</span>
+                <span style="flex:1; text-align:left">{{ s.label }}</span>
+                <span style="{{ s.tickStyle }}">✓</span>
+              </button>
+            </sc-for>
+          </nav>
+          <div style="padding:14px 24px; border-top:1px solid rgba(32,30,29,.18); display:flex; justify-content:space-between; align-items:center">
+            <button onClick="{{ toggleLang }}" style="font-family:Archivo; font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:transparent; border:1px solid rgba(32,30,29,.3); padding:6px 10px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">{{ langLabel }}</button>
+            <button onClick="{{ home }}" style="font-family:Archivo; font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:transparent; border:0; cursor:pointer; color:#605d5d" style-hover="color:#4340c4">{{ restartLabel }}</button>
+          </div>
+        </aside>
+      </sc-if>
+
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column">
+
+        <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+          <div style="position:sticky; top:0; z-index:5; background:#f3f2f2; border-bottom:2px solid rgba(32,30,29,.4); padding:12px 18px">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px">
+              <button onClick="{{ back }}" style="font-family:Archivo; font-weight:800; font-size:12px; background:transparent; border:0; cursor:pointer; padding:4px 0; color:#201e1d">←</button>
+              <span style="font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase">{{ mobileStepLabel }}</span>
+              <button onClick="{{ toggleLang }}" style="font-family:Archivo; font-weight:800; font-size:11px; background:transparent; border:1px solid rgba(32,30,29,.3); padding:4px 8px; cursor:pointer; color:#201e1d">{{ langLabel }}</button>
+            </div>
+            <div style="height:4px; background:rgba(32,30,29,.15)">
+              <div style="height:4px; background:#4340c4; transition:width .3s; width:{{ progressWidth }}"></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isFlow }}" hint-placeholder-val="{{ true }}">
+          <main style="{{ mainStyle }}">
+            <div style="max-width:780px">
+              <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px">
+                <span style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#4340c4">{{ stepKicker }}</span>
+                <span style="font-size:12px; color:#7d7979; letter-spacing:.06em; text-transform:uppercase">{{ stepCounter }}</span>
+              </div>
+              <h1 style="font-size:36px; line-height:1.08; letter-spacing:-.02em; margin:0 0 6px">{{ stepTitle }}</h1>
+              <p style="font-size:15px; color:#605d5d; margin:0 0 6px; max-width:60ch">{{ stepIntro }}</p>
+
+              <sc-for list="{{ questions }}" as="q" hint-placeholder-count="2">
+                <section style="border-top:2px solid rgba(32,30,29,.4); padding-top:26px; margin-top:34px; animation:riseIn .28s ease both">
+                  <sc-if value="{{ q.conditional }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#4340c4; background:#eeeefb; padding:4px 8px; margin-bottom:10px">{{ q.conditionalLabel }}</div>
+                  </sc-if>
+                  <h2 style="font-size:24px; line-height:1.18; margin:0 0 8px; max-width:34ch">{{ q.title }}</h2>
+                  <p style="font-size:15px; color:#605d5d; margin:0 0 4px; max-width:62ch; text-wrap:pretty">{{ q.help }}</p>
+                  <sc-if value="{{ q.ex }}" hint-placeholder-val="{{ false }}">
+                    <p style="font-size:13px; color:#7d7979; margin:0 0 4px; max-width:62ch">{{ q.ex }}</p>
+                  </sc-if>
+
+                  <sc-if value="{{ q.isText }}" hint-placeholder-val="{{ false }}">
+                    <input value="{{ q.value }}" onChange="{{ q.onInput }}" placeholder="{{ q.ph }}" aria-label="{{ q.title }}" style="margin-top:14px; width:100%; max-width:480px; font-family:Archivo; font-size:16px; padding:13px 14px; background:#fff; border:1px solid rgba(32,30,29,.3); color:#201e1d" />
+                  </sc-if>
+
+                  <sc-if value="{{ q.isLong }}" hint-placeholder-val="{{ false }}">
+                    <textarea value="{{ q.value }}" onChange="{{ q.onInput }}" placeholder="{{ q.ph }}" aria-label="{{ q.title }}" rows="4" style="margin-top:14px; width:100%; max-width:620px; font-family:Archivo; font-size:15px; line-height:1.5; padding:13px 14px; background:#fff; border:1px solid rgba(32,30,29,.3); color:#201e1d; resize:vertical"></textarea>
+                  </sc-if>
+
+                  <sc-if value="{{ q.isTags }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:14px">
+                      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px">
+                        <sc-for list="{{ q.tags }}" as="tag" hint-placeholder-count="0">
+                          <span style="display:inline-flex; align-items:center; gap:8px; background:#eeeefb; color:#2f2ca0; font-size:13px; font-weight:600; padding:6px 10px">{{ tag.label }}<button onClick="{{ tag.remove }}" aria-label="remove" style="background:transparent; border:0; cursor:pointer; color:#2f2ca0; font-size:14px; line-height:1; padding:0">×</button></span>
+                        </sc-for>
+                      </div>
+                      <input value="{{ q.draft }}" onChange="{{ q.onDraft }}" onKeyDown="{{ q.onKey }}" placeholder="{{ q.ph }}" aria-label="{{ q.title }}" style="width:100%; max-width:480px; font-family:Archivo; font-size:15px; padding:12px 14px; background:#fff; border:1px solid rgba(32,30,29,.3); color:#201e1d" />
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ q.isScale }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:16px; display:flex; flex-wrap:wrap; border:1px solid rgba(32,30,29,.3); background:#fff; max-width:680px">
+                      <sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="4">
+                        <button onClick="{{ o.pick }}" style="{{ o.segStyle }}">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ q.isCards }}" hint-placeholder-val="{{ true }}">
+                    <div style="{{ q.gridStyle }}">
+                      <sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="6">
+                        <button onClick="{{ o.pick }}" aria-pressed="{{ o.selected }}" style="{{ o.cardStyle }}">
+                          <span style="{{ o.markStyle }}">{{ o.mark }}</span>
+                          <span style="display:block; font-weight:800; font-size:15px; line-height:1.25">{{ o.label }}</span>
+                          <sc-if value="{{ o.desc }}" hint-placeholder-val="{{ false }}">
+                            <span style="display:block; font-size:13px; color:#605d5d; margin-top:5px; line-height:1.45; font-weight:400">{{ o.desc }}</span>
+                          </sc-if>
+                        </button>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ q.limitNote }}" hint-placeholder-val="{{ false }}">
+                      <p style="font-size:12px; color:#7d7979; margin:10px 0 0">{{ q.limitNote }}</p>
+                    </sc-if>
+                  </sc-if>
+                </section>
+              </sc-for>
+
+              <div style="border-top:2px solid rgba(32,30,29,.4); margin-top:40px; padding:22px 0 8px; display:flex; gap:12px; align-items:center; flex-wrap:wrap">
+                <button onClick="{{ next }}" style="font-family:Archivo; font-weight:800; font-size:15px; background:#4340c4; color:#fff; border:0; padding:14px 24px; cursor:pointer; display:flex; align-items:center; gap:10px" style-hover="background:#2f2ca0">{{ nextLabel }}<span style="font-size:17px; line-height:1">→</span></button>
+                <button onClick="{{ back }}" style="font-family:Archivo; font-weight:800; font-size:15px; background:transparent; border:1px solid rgba(32,30,29,.3); padding:14px 20px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">{{ backLabel }}</button>
+                <button onClick="{{ skip }}" style="font-family:Archivo; font-weight:800; font-size:13px; background:transparent; border:0; cursor:pointer; color:#605d5d; margin-left:auto" style-hover="color:#4340c4">{{ skipLabel }}</button>
+              </div>
+            </div>
+          </main>
+        </sc-if>
+
+        <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+          <main style="{{ mainStyle }}">
+            <div style="max-width:940px">
+              <div style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#4340c4; margin-bottom:10px">{{ reviewKicker }}</div>
+              <h1 style="font-size:44px; line-height:1.04; letter-spacing:-.025em; margin:0 0 10px">Your Website Blueprint</h1>
+              <p style="font-size:16px; color:#605d5d; max-width:60ch; margin:0 0 30px">{{ reviewIntro }}</p>
+
+              <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:1px; background:rgba(32,30,29,.25); border:1px solid rgba(32,30,29,.25)">
+                <sc-for list="{{ reviewCards }}" as="c" hint-placeholder-count="8">
+                  <div style="background:#fff; padding:20px 20px 18px; display:flex; flex-direction:column; gap:10px">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px">
+                      <span style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#7d7979">{{ c.title }}</span>
+                      <button onClick="{{ c.edit }}" style="font-family:Archivo; font-weight:800; font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:transparent; border:0; cursor:pointer; color:#4340c4; padding:0" style-hover="color:#2f2ca0">Edit</button>
+                    </div>
+                    <sc-for list="{{ c.rows }}" as="r" hint-placeholder-count="2">
+                      <div>
+                        <div style="font-size:12px; color:#7d7979; margin-bottom:2px">{{ r.k }}</div>
+                        <div style="font-size:14px; line-height:1.45; color:#201e1d">{{ r.v }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="border-top:2px solid rgba(32,30,29,.4); margin-top:48px; padding-top:26px">
+                <h2 style="font-size:30px; margin:0 0 6px">Recommended Architecture</h2>
+                <p style="font-size:15px; color:#605d5d; max-width:62ch; margin:0 0 22px">{{ archIntro }}</p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(190px,1fr)); gap:1px; background:rgba(32,30,29,.25); border:1px solid rgba(32,30,29,.25)">
+                  <sc-for list="{{ archItems }}" as="a" hint-placeholder-count="6">
+                    <div style="background:#fff; padding:18px 18px 16px">
+                      <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#7d7979; margin-bottom:8px">{{ a.role }}</div>
+                      <div style="font-size:20px; font-weight:800; line-height:1.15; margin-bottom:6px">{{ a.pick }}</div>
+                      <div style="font-size:13px; color:#605d5d; line-height:1.45">{{ a.why }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <p style="font-size:13px; color:#7d7979; margin:14px 0 0">{{ archNote }}</p>
+              </div>
+
+              <div style="border-top:2px solid rgba(32,30,29,.4); margin-top:40px; padding:24px 0 10px; display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+                <button onClick="{{ generate }}" style="font-family:Archivo; font-weight:800; font-size:16px; background:#4340c4; color:#fff; border:0; padding:16px 26px; cursor:pointer; display:flex; align-items:center; gap:10px" style-hover="background:#2f2ca0">Generate Project Brief<span style="font-size:18px; line-height:1">→</span></button>
+                <button onClick="{{ back }}" style="font-family:Archivo; font-weight:800; font-size:15px; background:transparent; border:1px solid rgba(32,30,29,.3); padding:16px 20px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">{{ backLabel }}</button>
+              </div>
+            </div>
+          </main>
+        </sc-if>
+
+        <sc-if value="{{ isBrief }}" hint-placeholder-val="{{ false }}">
+          <main style="{{ mainStyle }}">
+            <div style="max-width:900px">
+              <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:18px">
+                <div>
+                  <div style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#4340c4; margin-bottom:8px">{{ briefKicker }}</div>
+                  <h1 style="font-size:34px; margin:0; letter-spacing:-.02em">PROJECT_BRIEF.md</h1>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap">
+                  <button onClick="{{ copyMd }}" style="font-family:Archivo; font-weight:800; font-size:13px; background:#4340c4; color:#fff; border:0; padding:11px 16px; cursor:pointer" style-hover="background:#2f2ca0">{{ copyLabel }}</button>
+                  <button onClick="{{ downloadMd }}" style="font-family:Archivo; font-weight:800; font-size:13px; background:transparent; border:1px solid rgba(32,30,29,.3); padding:11px 16px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">Download .md</button>
+                  <button onClick="{{ editAnswers }}" style="font-family:Archivo; font-weight:800; font-size:13px; background:transparent; border:1px solid rgba(32,30,29,.3); padding:11px 16px; cursor:pointer; color:#201e1d" style-hover="background:rgba(32,30,29,.07)">{{ editLabel }}</button>
+                  <button onClick="{{ home }}" style="font-family:Archivo; font-weight:800; font-size:13px; background:transparent; border:0; padding:11px 8px; cursor:pointer; color:#605d5d" style-hover="color:#4340c4">{{ restartLabel }}</button>
+                </div>
+              </div>
+              <div style="border:1px solid rgba(32,30,29,.3); background:#fff">
+                <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid rgba(32,30,29,.2); background:#eae9e9">
+                  <span style="width:9px; height:9px; background:#4340c4; display:block"></span>
+                  <span style="font-size:12px; font-weight:800; letter-spacing:.06em">PROJECT_BRIEF.md</span>
+                  <span style="font-size:12px; color:#7d7979; margin-left:auto">{{ mdMeta }}</span>
+                </div>
+                <pre style="margin:0; padding:26px 28px; font-family:ui-monospace, 'SF Mono', Menlo, monospace; font-size:13.5px; line-height:1.75; color:#201e1d; white-space:pre-wrap; word-break:break-word; max-height:640px; overflow:auto">{{ markdown }}</pre>
+              </div>
+            </div>
+          </main>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;initialScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;start&quot;,&quot;flow&quot;,&quot;review&quot;,&quot;brief&quot;],&quot;default&quot;:&quot;start&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;initialStep&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:15,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+const REC = { t: 'Não sei — recomende para mim|Not sure — recommend for me', d: 'Usaremos suas outras respostas para sugerir a melhor opção.|We will use your other answers to suggest the best option.', rec: true };
+
+const STEPS = [
+  { key: 'project', label: 'Projeto|Project', title: 'Vamos começar pelo básico|Let us start with the basics', intro: 'Três perguntas para situar o projeto.|Three questions to frame the project.', qs: [
+    { id: 'name', type: 'text', t: 'Qual é o nome do projeto?|What is the project called?', help: 'Pode ser um nome provisório.|A working name is fine.', ph: 'Clínica Aurora' },
+    { id: 'kind', type: 'cards', cols: 3, t: 'Que tipo de website você deseja criar?|What kind of website do you want to build?', help: 'Isso define a estrutura de páginas e boa parte das perguntas seguintes.|This shapes the page structure and most of the questions that follow.', opts: ['Site institucional|Company site', 'Landing page|Landing page', 'Portfólio|Portfolio', 'Blog / editorial|Blog / editorial', 'E-commerce|E-commerce', 'SaaS / aplicação web|SaaS / web app', 'Marketplace|Marketplace', 'Diretório|Directory', 'Comunidade|Community', 'Evento|Event', 'Turismo / hotelaria|Travel / hospitality', 'Educação|Education'] },
+    { id: 'existing', type: 'cards', cols: 2, t: 'Já existe um website hoje?|Is there a website today?', help: '', opts: ['Não|No', 'Sim, será redesenhado|Yes, it will be redesigned', 'Sim, haverá migração|Yes, it will be migrated', 'Apenas uma landing temporária|Only a temporary landing page'] },
+    { id: 'url', type: 'text', cond: true, when: (a) => a.existing && a.existing !== 'Não|No', t: 'Qual é o endereço atual?|What is the current address?', help: 'Vamos analisar conteúdo, URLs e redirecionamentos.|We will look at content, URLs and redirects.', ph: 'https://exemplo.com' }
+  ]},
+  { key: 'goals', label: 'Objetivos|Goals', title: 'O que o site precisa alcançar|What the site has to achieve', intro: 'Objetivos definem prioridade de conteúdo e métricas.|Goals set content priority and metrics.', qs: [
+    { id: 'goals', type: 'cards', multi: true, cols: 3, t: 'O que este website precisa alcançar?|What does this website need to achieve?', help: 'Escolha quantos quiser. O primeiro item vira a prioridade da home.|Pick as many as you like. The first one becomes the homepage priority.', opts: ['Gerar leads|Generate leads', 'Receber contatos|Receive enquiries', 'Vender produtos|Sell products', 'Vender serviços|Sell services', 'Apresentar a marca|Present the brand', 'Publicar conteúdo|Publish content', 'Receber reservas|Take bookings', 'Criar comunidade|Build a community', 'Área do cliente|Client area', 'Captar newsletter|Grow a newsletter', 'Tráfego orgânico|Organic traffic'] },
+    { id: 'conversion', type: 'cards', cols: 3, t: 'Qual é a principal conversão?|What is the main conversion?', help: 'A ação que define o sucesso do site.|The single action that defines success.', opts: ['Formulário enviado|Form submitted', 'Compra|Purchase', 'Reserva|Booking', 'Cadastro|Sign-up', 'Ligação|Phone call', 'Download|Download', 'Mensagem|Message', 'Visita física|In-person visit'] }
+  ]},
+  { key: 'audience', label: 'Público|Audience', title: 'Para quem o site é feito|Who the site is for', intro: '', qs: [
+    { id: 'who', type: 'long', t: 'Quem é o público principal?|Who is the main audience?', help: 'Descreva com suas palavras.|Describe it in your own words.', ex: 'Ex.: "mulheres de 30 a 55 anos na região metropolitana buscando dermatologia estética".|E.g. "women 30–55 in the metro area looking for cosmetic dermatology".', ph: '' },
+    { id: 'reach', type: 'cards', multi: true, cols: 4, t: 'Onde esse público está?|Where is this audience?', help: 'Isso influencia idiomas, CDN e SEO local.|This affects languages, CDN and local SEO.', opts: ['Local|Local', 'Regional|Regional', 'Nacional|National', 'Internacional|International'] },
+    { id: 'langs', type: 'cards', multi: true, cols: 4, t: 'Quais idiomas o site precisa ter?|Which languages does the site need?', help: '', opts: ['Português|Portuguese', 'Inglês|English', 'Espanhol|Spanish', 'Alemão|German', 'Francês|French', 'Outro|Other'] },
+    { id: 'device', type: 'cards', cols: 4, t: 'Qual dispositivo será mais usado?|Which device will be used most?', help: '', opts: ['Mobile|Mobile', 'Desktop|Desktop', 'Aproximadamente igual|Roughly equal', REC] },
+    { id: 'savvy', type: 'scale', t: 'O usuário típico tem familiaridade com tecnologia?|How tech-savvy is the typical user?', help: 'Define densidade de interface, ajuda contextual e onboarding.|Sets interface density, inline help and onboarding.', opts: ['Muito baixa|Very low', 'Baixa|Low', 'Média|Medium', 'Alta|High', 'Muito alta|Very high'] }
+  ]},
+  { key: 'content', label: 'Conteúdo|Content', title: 'Conteúdo e tom de voz|Content and tone of voice', intro: 'Conteúdo costuma ser o que atrasa projetos. Melhor saber agora.|Content is what usually delays projects. Better to know now.', qs: [
+    { id: 'contentReady', type: 'cards', cols: 4, t: 'O conteúdo já existe?|Does the content already exist?', help: '', opts: ['Sim, completo|Yes, complete', 'Parcialmente|Partially', 'Ainda não|Not yet', 'Preciso de ajuda|I need help'] },
+    { id: 'writer', type: 'cards', cols: 3, t: 'Quem escreverá o conteúdo?|Who will write the content?', help: '', opts: ['Cliente|Client', 'Copywriter|Copywriter', 'Desenvolvedor|Developer', 'IA como apoio|AI as support', 'Ainda não definido|Not decided yet'] },
+    { id: 'tone', type: 'cards', multi: true, max: 3, cols: 4, t: 'Qual é o tom de voz?|What is the tone of voice?', help: 'Selecione até três.|Select up to three.', opts: ['Profissional|Professional', 'Amigável|Friendly', 'Técnico|Technical', 'Premium|Premium', 'Inspirador|Inspiring', 'Direto|Direct', 'Informal|Informal', 'Institucional|Institutional'] },
+    { id: 'assets', type: 'cards', multi: true, cols: 3, t: 'Que materiais já existem?|Which assets already exist?', help: '', opts: ['Logo|Logo', 'Fotografias|Photography', 'Vídeos|Video', 'Ilustrações|Illustration', 'Textos|Copy', 'Depoimentos|Testimonials', 'Cases|Case studies', 'Produtos|Product data', 'Brand guidelines|Brand guidelines'] },
+    { id: 'pages', type: 'cards', multi: true, cols: 4, t: 'Quais páginas o site terá?|Which pages will the site have?', help: 'Um sitemap inicial. Podemos crescer depois.|A starting sitemap. It can grow later.', opts: ['Home|Home', 'Sobre|About', 'Serviços|Services', 'Produtos|Products', 'Blog|Blog', 'Contato|Contact', 'FAQ|FAQ', 'Preços|Pricing', 'Cases|Cases', 'Equipe|Team', 'Galeria|Gallery', 'Reservas|Booking', 'Área do cliente|Client area', 'Login|Login', 'Legal|Legal'] }
+  ]},
+  { key: 'uiux', label: 'UI / UX|UI / UX', title: 'Direção visual|Visual direction', intro: '', qs: [
+    { id: 'style', type: 'cards', cols: 3, t: 'Qual estilo visual representa o projeto?|Which visual style fits the project?', help: '', opts: [{t:'Minimalista|Minimal', d:'Muito branco, tipografia forte.|Lots of white, strong type.'}, {t:'Editorial|Editorial', d:'Leitura em primeiro lugar.|Reading comes first.'}, {t:'Premium|Premium', d:'Contraste alto, detalhes finos.|High contrast, fine detail.'}, {t:'Corporativo|Corporate', d:'Sóbrio e previsível.|Sober and predictable.'}, {t:'Tecnológico|Technical', d:'Densidade e dados à vista.|Density, data on show.'}, {t:'Criativo|Expressive', d:'Layout com personalidade.|Layout with personality.'}, {t:'Natural / orgânico|Natural', d:'Tons quentes, fotografia.|Warm tones, photography.'}, {t:'Brutalista|Brutalist', d:'Grid exposto, sem enfeite.|Exposed grid, no ornament.'}, REC] },
+    { id: 'layout', type: 'cards', cols: 3, t: 'Que tipo de layout?|What kind of layout?', help: '', opts: ['Muito clean|Very clean', 'Visual / imersivo|Visual / immersive', 'Editorial|Editorial', 'Conteúdo denso|Dense content', 'Dashboard|Dashboard', 'Experimental|Experimental'] },
+    { id: 'identity', type: 'cards', cols: 3, t: 'Já existe identidade visual?|Is there an existing visual identity?', help: '', opts: ['Sim, completa|Yes, complete', 'Parcialmente|Partially', 'Não|No'] },
+    { id: 'theme', type: 'cards', cols: 5, t: 'Tema da interface|Interface theme', help: '', opts: ['Claro|Light', 'Escuro|Dark', 'Ambos|Both', 'Automático|Automatic', 'Não definido|Undecided'] },
+    { id: 'refs', type: 'tags', t: 'Sites de referência|Reference sites', help: 'Cole endereços de sites que você admira. Depois marcamos o que agrada em cada um.|Paste addresses of sites you admire. We will tag what you like about each.', ph: 'stripe.com  ⏎' },
+    { id: 'refLikes', type: 'cards', multi: true, cols: 4, t: 'O que te agrada nessas referências?|What do you like in those references?', help: '', opts: ['Layout|Layout', 'Tipografia|Typography', 'Cores|Color', 'Navegação|Navigation', 'Animações|Motion', 'Conteúdo|Content', 'Fotografia|Photography', 'Sensação geral|Overall feel'] }
+  ]},
+  { key: 'features', label: 'Funcionalidades|Features', title: 'O que o site precisa fazer|What the site needs to do', intro: 'Escolha só o que é necessário no lançamento.|Pick only what is needed at launch.', qs: [
+    { id: 'features', type: 'cards', multi: true, cols: 3, t: 'Quais funcionalidades são necessárias?|Which features are needed?', help: 'Algumas escolhas abrem perguntas extras.|Some choices open extra questions.', opts: ['Formulário de contato|Contact form', 'Newsletter|Newsletter', 'Busca|Search', 'Login|Login', 'Área privada|Private area', 'Pagamentos|Payments', 'Carrinho|Cart', 'Reservas|Bookings', 'Calendário|Calendar', 'Upload de arquivos|File upload', 'Chat|Chat', 'Comentários|Comments', 'Reviews|Reviews', 'Mapa|Map', 'Multilíngue|Multilingual', 'Notificações|Notifications', 'Dashboard|Dashboard', 'Integrações externas|External integrations'] },
+    { id: 'payMethods', type: 'cards', multi: true, cols: 4, cond: true, when: (a) => (a.features || []).some((v) => v.indexOf('Pagamentos') === 0 || v.indexOf('Carrinho') === 0), t: 'Como os pagamentos serão recebidos?|How will payments be taken?', help: 'Você marcou pagamentos, então precisamos disso.|You selected payments, so we need this.', opts: ['Cartão|Card', 'Pix|Instant transfer', 'Boleto|Bank slip', 'Assinatura recorrente|Subscription', 'Carteira digital|Digital wallet', REC] }
+  ]},
+  { key: 'data', label: 'Dados|Data', title: 'Informações que o site guarda|Information the site stores', intro: 'Sem jargão: se nada precisa ser guardado, o projeto fica mais simples e barato.|No jargon: if nothing has to be stored, the project gets simpler and cheaper.', qs: [
+    { id: 'stores', type: 'cards', multi: true, cols: 3, t: 'O website precisa armazenar informações?|Does the website need to store information?', help: '', opts: ['Usuários|Users', 'Pedidos|Orders', 'Reservas|Bookings', 'Mensagens|Messages', 'Produtos|Products', 'Conteúdo editorial|Editorial content', 'Uploads|Uploads', 'Histórico|History', 'Nada dinâmico|Nothing dynamic'] },
+    { id: 'accounts', type: 'cards', cols: 3, t: 'Usuários precisam criar conta?|Do users need to create an account?', help: '', opts: ['Não|No', 'Sim|Yes', 'Talvez futuramente|Maybe later'] },
+    { id: 'authMethods', type: 'cards', multi: true, cols: 3, cond: true, when: (a) => a.accounts === 'Sim|Yes', t: 'Como as pessoas entrarão?|How will people sign in?', help: '', opts: ['Email + senha|Email + password', 'Magic link|Magic link', 'Google|Google', 'Apple|Apple', 'GitHub|GitHub', 'Microsoft|Microsoft'] },
+    { id: 'roles', type: 'cards', multi: true, cols: 5, cond: true, when: (a) => a.accounts === 'Sim|Yes', t: 'Existem níveis de acesso diferentes?|Are there different access levels?', help: '', opts: ['Administrador|Administrator', 'Editor|Editor', 'Cliente|Client', 'Membro|Member', 'Visitante|Visitor'] }
+  ]},
+  { key: 'stack', label: 'Stack|Stack', title: 'Tecnologia|Technology', intro: 'Você não precisa decidir isto. Se não houver preferência, recomendamos ao final.|You do not have to decide this. With no preference, we recommend at the end.', qs: [
+    { id: 'stack', type: 'cards', cols: 3, t: 'Você tem preferência tecnológica?|Do you have a technology preference?', help: '', opts: ['Next.js|Next.js', 'React|React', 'Astro|Astro', 'Vue / Nuxt|Vue / Nuxt', 'Svelte|Svelte', 'WordPress|WordPress', 'Webflow|Webflow', 'Shopify|Shopify', {t:'Sem preferência|No preference', d:'A arquitetura será recomendada com base nas necessidades do projeto.|The architecture will be recommended from the project needs.'}] },
+    { id: 'freq', type: 'cards', cols: 3, t: 'Com que frequência o conteúdo muda?|How often does the content change?', help: 'Esta resposta define renderização, cache e CMS.|This answer drives rendering, caching and CMS.', opts: ['Raramente|Rarely', 'Algumas vezes por mês|A few times a month', 'Diariamente|Daily', 'Muda para cada usuário|Different for each user', REC] },
+    { id: 'cms', type: 'cards', cols: 3, t: 'Quem vai editar o conteúdo depois?|Who will edit content after launch?', help: '', opts: ['Equipe sem conhecimento técnico|A non-technical team', 'Equipe técnica|A technical team', 'Ninguém, conteúdo fixo|Nobody, fixed content', REC] }
+  ]},
+  { key: 'seo', label: 'SEO|SEO', title: 'Visibilidade em mecanismos de busca|Visibility in search engines', intro: '', qs: [
+    { id: 'seoPriority', type: 'scale', t: 'Qual a prioridade de SEO?|How much of a priority is SEO?', help: '', opts: ['Baixa|Low', 'Importante|Important', 'Muito importante|Very important', 'Essencial|Essential'] },
+    { id: 'organic', type: 'cards', cols: 4, t: 'O projeto depende de tráfego orgânico?|Does the project depend on organic traffic?', help: 'Se a maior parte dos clientes chega pela busca, mudam prioridades técnicas.|If most customers arrive via search, technical priorities change.', opts: ['Muito|A lot', 'Parcialmente|Partly', 'Pouco|Little', REC] },
+    { id: 'keywords', type: 'tags', t: 'Existem palavras-chave importantes?|Are there important keywords?', help: 'Termos que as pessoas digitam para encontrar você.|Terms people type to find you.', ph: 'dermatologia estética  ⏎' },
+    { id: 'competitors', type: 'tags', t: 'Concorrentes conhecidos|Known competitors', help: '', ph: 'concorrente.com  ⏎' }
+  ]},
+  { key: 'a11y', label: 'Acessibilidade|Accessibility', title: 'Acessibilidade|Accessibility', intro: 'Um site acessível funciona melhor para todo mundo e reduz risco legal.|An accessible site works better for everyone and lowers legal risk.', qs: [
+    { id: 'a11y', type: 'cards', cols: 2, t: 'Qual nível de acessibilidade você deseja?|What level of accessibility do you want?', help: '', opts: [{t:'Essencial|Essential', d:'Boas práticas básicas: contraste, teclado, textos alternativos.|Basic good practice: contrast, keyboard, alt text.'}, {t:'WCAG 2.2 AA|WCAG 2.2 AA', d:'Recomendado para a maioria dos projetos. Este é o padrão.|Recommended for most projects. This is the default.'}, {t:'Conformidade alta|High conformance', d:'Projetos governamentais, institucionais ou regulados.|Government, institutional or regulated projects.'}, REC] }
+  ]},
+  { key: 'perf', label: 'Performance|Performance', title: 'Velocidade|Speed', intro: 'Sites rápidos melhoram experiência, SEO e conversão.|Fast sites improve experience, SEO and conversion.', qs: [
+    { id: 'perf', type: 'scale', t: 'Performance é prioridade?|Is performance a priority?', help: 'Metas recomendadas: LCP ≤ 2,5s · INP ≤ 200ms · CLS ≤ 0,1.|Recommended targets: LCP ≤ 2.5s · INP ≤ 200ms · CLS ≤ 0.1.', opts: ['Normal|Normal', 'Alta|High', 'Crítica|Critical'] },
+    { id: 'media', type: 'cards', cols: 4, t: 'O site terá muitas imagens ou vídeos?|Will the site carry a lot of images or video?', help: 'Mídia pesada é a causa mais comum de lentidão.|Heavy media is the most common cause of slowness.', opts: ['Pouca mídia|Little media', 'Bastante fotografia|A lot of photography', 'Vídeo em destaque|Video up front', REC] }
+  ]},
+  { key: 'security', label: 'Segurança|Security', title: 'Dados pessoais e privacidade|Personal data and privacy', intro: '', qs: [
+    { id: 'personal', type: 'cards', multi: true, cols: 3, t: 'Que dados pessoais o site coletará?|What personal data will the site collect?', help: '', opts: ['Email|Email', 'Nome|Name', 'Telefone|Phone', 'Endereço|Address', 'Pagamento|Payment', 'Localização|Location', 'Nenhum|None'] },
+    { id: 'privacy', type: 'cards', multi: true, cols: 3, cond: true, when: (a) => (a.personal || []).length > 0 && (a.personal || []).indexOf('Nenhum|None') === -1, t: 'Privacidade e consentimento|Privacy and consent', help: 'Itens necessários porque haverá coleta de dados pessoais.|Needed because personal data will be collected.', opts: ['Cookie banner|Cookie banner', 'Consent management|Consent management', 'Política de privacidade|Privacy policy', 'LGPD / GDPR|LGPD / GDPR', 'Retenção de dados|Data retention'] }
+  ]},
+  { key: 'analytics', label: 'Analytics|Analytics', title: 'Medição|Measurement', intro: '', qs: [
+    { id: 'track', type: 'cards', cols: 3, t: 'Deseja acompanhar o comportamento dos visitantes?|Do you want to track visitor behaviour?', help: '', opts: ['Sim|Yes', 'Não|No', 'Ainda não sei|Not sure yet'] },
+    { id: 'tools', type: 'cards', multi: true, cols: 3, cond: true, when: (a) => a.track === 'Sim|Yes', t: 'Quais ferramentas?|Which tools?', help: '', opts: ['Google Analytics|Google Analytics', 'Plausible|Plausible', 'Matomo|Matomo', 'PostHog|PostHog', 'Search Console|Search Console', 'Heatmaps|Heatmaps', REC] }
+  ]},
+  { key: 'infra', label: 'Infraestrutura|Infrastructure', title: 'Onde o site vai morar|Where the site will live', intro: '', qs: [
+    { id: 'hosting', type: 'cards', cols: 3, t: 'Já existe hospedagem?|Is there hosting already?', help: '', opts: ['Sim|Yes', 'Não|No', 'Não sei|I do not know'] },
+    { id: 'hostPriority', type: 'cards', cols: 3, cond: true, when: (a) => a.hosting && a.hosting !== 'Sim|Yes', t: 'Qual prioridade importa mais?|Which priority matters most?', help: '', opts: ['Menor custo|Lowest cost', 'Melhor performance|Best performance', 'Simplicidade|Simplicity', 'Escalabilidade|Scalability', 'Sustentabilidade|Sustainability', 'Controle da infraestrutura|Infrastructure control'] }
+  ]},
+  { key: 'domain', label: 'Domínio|Domain', title: 'Domínio, orçamento e prazo|Domain, budget and timeline', intro: '', qs: [
+    { id: 'domain', type: 'cards', cols: 3, t: 'Já possui domínio?|Do you already have a domain?', help: '', opts: ['Sim|Yes', 'Não|No', 'Quero ajuda para escolher|I want help choosing'] },
+    { id: 'domainName', type: 'text', cond: true, when: (a) => a.domain === 'Sim|Yes', t: 'Qual é o domínio?|What is the domain?', help: '', ph: 'exemplo.com' },
+    { id: 'budget', type: 'cards', cols: 3, t: 'Qual faixa de orçamento?|What budget range?', help: 'Opcional. Serve para calibrar escopo, não para cobrar.|Optional. It calibrates scope, not price.', opts: ['Projeto experimental|Experimental', 'Baixo orçamento|Low budget', 'Médio|Medium', 'Profissional|Professional', 'Premium|Premium', 'Ainda não definido|Not defined yet'] },
+    { id: 'deadline', type: 'cards', cols: 5, t: 'Quando você gostaria de lançar?|When would you like to launch?', help: '', opts: ['2–4 semanas|2–4 weeks', '1–2 meses|1–2 months', '3–6 meses|3–6 months', 'Mais de 6 meses|More than 6 months', 'Sem prazo|No deadline'] },
+    { id: 'maintenance', type: 'cards', cols: 5, t: 'Quem manterá o site depois do lançamento?|Who will maintain the site after launch?', help: '', opts: ['Cliente|Client', 'Desenvolvedor|Developer', 'Agência|Agency', 'Equipe interna|In-house team', 'Não definido|Not defined'] }
+  ]},
+  { key: 'review', label: 'Revisão|Review', title: 'Revisão|Review', intro: '', qs: [] }
+];
+
+class Component extends DCLogic {
+  state = {
+    lang: 0,
+    screen: this.props.initialScreen || 'start',
+    step: Number(this.props.initialStep) || 0,
+    answers: this.props.initialScreen && this.props.initialScreen !== 'start' ? SAMPLE() : {},
+    drafts: {},
+    copied: false,
+    narrow: false
+  };
+
+  attachRoot = (el) => {
+    this.rootEl = el;
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+    if (!el) return;
+    const measure = () => {
+      const n = el.clientWidth > 0 && el.clientWidth < 860;
+      if (n !== this.state.narrow) this.setState({ narrow: n });
+    };
+    if (typeof ResizeObserver !== 'undefined') {
+      this.ro = new ResizeObserver(measure);
+      this.ro.observe(el);
+    } else if (typeof window !== 'undefined') {
+      this.onResize = measure;
+      window.addEventListener('resize', measure);
+    }
+    requestAnimationFrame(measure);
+  };
+  componentWillUnmount() {
+    if (this.ro) this.ro.disconnect();
+    if (this.onResize) window.removeEventListener('resize', this.onResize);
+  }
+
+  t = (s) => { if (!s) return ''; const p = String(s).split('|'); return p[this.state.lang] || p[0]; };
+  a = () => this.state.answers;
+  set = (id, v) => this.setState((s) => ({ answers: Object.assign({}, s.answers, { [id]: v }) }));
+  toggle = (id, v, max) => this.setState((s) => {
+    const cur = s.answers[id] || [];
+    let next = cur.indexOf(v) > -1 ? cur.filter((x) => x !== v) : cur.concat([v]);
+    if (max && next.length > max) next = next.slice(next.length - max);
+    return { answers: Object.assign({}, s.answers, { [id]: next }) };
+  });
+
+  visibleQs = (step) => (STEPS[step].qs || []).filter((q) => !q.when || q.when(this.a()));
+
+  go = (i) => this.setState({ screen: i >= STEPS.length - 1 ? 'review' : 'flow', step: Math.max(0, Math.min(i, STEPS.length - 1)), copied: false });
+  next = () => this.go(this.state.step + 1);
+  back = () => { if (this.state.screen === 'brief') return this.setState({ screen: 'review' }); if (this.state.screen === 'review') return this.go(STEPS.length - 2); this.go(this.state.step - 1); };
+
+  markdown = () => {
+    const a = this.a(), T = (s) => this.t(s);
+    const L = (v, d) => (Array.isArray(v) ? (v.length ? v.map(T).join(', ') : d) : v ? T(v) : d);
+    const dash = this.state.lang ? '_not specified_' : '_não informado_';
+    const arch = this.arch();
+    const pages = (a.pages || []).map(T);
+    return [
+      '# ' + (a.name || 'Untitled Project'),
+      '',
+      '## Project Overview',
+      '- Type: ' + L(a.kind, dash),
+      '- Existing site: ' + L(a.existing, dash) + (a.url ? ' — ' + a.url : ''),
+      '- Timeline: ' + L(a.deadline, dash),
+      '- Budget band: ' + L(a.budget, dash),
+      '',
+      '## Goals',
+      (a.goals || []).length ? (a.goals || []).map((g) => '- ' + T(g)).join('\n') : '- ' + dash,
+      '',
+      '**Primary conversion:** ' + L(a.conversion, dash),
+      '',
+      '## Target Audience',
+      a.who || dash,
+      '',
+      '- Reach: ' + L(a.reach, dash),
+      '- Languages: ' + L(a.langs, dash),
+      '- Primary device: ' + L(a.device, dash),
+      '- Technical familiarity: ' + L(a.savvy, dash),
+      '',
+      '## Sitemap',
+      pages.length ? pages.map((p) => '- /' + p.toLowerCase().replace(/\s+/g, '-')).join('\n') : '- /home',
+      '',
+      '## UI / UX',
+      '- Style: ' + L(a.style, dash),
+      '- Layout: ' + L(a.layout, dash),
+      '- Theme: ' + L(a.theme, dash),
+      '- Existing identity: ' + L(a.identity, dash),
+      '- References: ' + ((a.refs || []).length ? (a.refs || []).join(', ') : dash),
+      '- Liked in references: ' + L(a.refLikes, dash),
+      '',
+      '## Content Strategy',
+      '- Content readiness: ' + L(a.contentReady, dash),
+      '- Written by: ' + L(a.writer, dash),
+      '- Tone of voice: ' + L(a.tone, dash),
+      '- Existing assets: ' + L(a.assets, dash),
+      '',
+      '## Functional Requirements',
+      (a.features || []).length ? (a.features || []).map((f) => '- ' + T(f)).join('\n') : '- ' + dash,
+      (a.payMethods || []).length ? '\n**Payments:** ' + L(a.payMethods, dash) : null,
+      '',
+      '## Data Model',
+      '- Stored entities: ' + L(a.stores, dash),
+      '- Accounts: ' + L(a.accounts, dash),
+      '- Sign-in methods: ' + L(a.authMethods, dash),
+      '- Roles: ' + L(a.roles, dash),
+      '',
+      '## Recommended Stack',
+      arch.map((x) => '- **' + x.role + ':** ' + x.pick + ' — ' + this.t(x.why)).join('\n'),
+      '',
+      '## SEO Requirements',
+      '- Priority: ' + L(a.seoPriority, dash),
+      '- Organic dependency: ' + L(a.organic, dash),
+      '- Keywords: ' + ((a.keywords || []).length ? (a.keywords || []).join(', ') : dash),
+      '- Competitors: ' + ((a.competitors || []).length ? (a.competitors || []).join(', ') : dash),
+      '- Baseline: semantic HTML, sitemap.xml, robots.txt, Open Graph, Schema.org markup',
+      '',
+      '## Accessibility',
+      '- Target: ' + L(a.a11y, 'WCAG 2.2 AA'),
+      '- Keyboard operable, visible focus, labelled controls, reduced-motion support',
+      '',
+      '## Performance',
+      '- Priority: ' + L(a.perf, this.state.lang ? 'High' : 'Alta'),
+      '- Targets: LCP ≤ 2.5s · INP ≤ 200ms · CLS ≤ 0.1',
+      '- Media profile: ' + L(a.media, dash),
+      '',
+      '## Security',
+      '- Personal data collected: ' + L(a.personal, dash),
+      '- Privacy measures: ' + L(a.privacy, dash),
+      '- HTTPS, input validation, rate limiting on public forms',
+      '',
+      '## Analytics',
+      '- Tracking: ' + L(a.track, dash),
+      '- Tools: ' + L(a.tools, dash),
+      '',
+      '## Hosting',
+      '- Existing hosting: ' + L(a.hosting, dash),
+      '- Priority: ' + L(a.hostPriority, dash),
+      '',
+      '## Domain',
+      '- ' + L(a.domain, dash) + (a.domainName ? ' — ' + a.domainName : ''),
+      '',
+      '## QA',
+      '- Cross-browser: latest Chrome, Safari, Firefox, Edge',
+      '- Responsive: 360px → 1920px',
+      '- Accessibility audit against the target above before launch',
+      '',
+      '## Deliverables',
+      '- Sitemap and wireframes',
+      '- Design system and page designs',
+      '- Implemented site with CMS access',
+      '- Analytics, SEO and deployment setup',
+      '- Handover documentation — maintained by: ' + L(a.maintenance, dash),
+      '',
+      '## Roadmap',
+      '1. Discovery and content inventory',
+      '2. Sitemap, wireframes, design system',
+      '3. Page design and review',
+      '4. Build and integrations',
+      '5. QA, accessibility and performance pass',
+      '6. Launch and post-launch monitoring'
+    ].filter((l) => l !== null).join('\n');
+  };
+
+  arch = () => {
+    const a = this.a(), has = (k, v) => (a[k] || []).some((x) => x.indexOf(v) === 0);
+    const kind = (a.kind || '').split('|')[0];
+    const freq = (a.freq || '').split('|')[0];
+    const pref = (a.stack || '').split('|')[0];
+    const dynamic = a.accounts === 'Sim|Yes' || has('features', 'Pagamentos') || has('features', 'Área privada') || freq === 'Muda para cada usuário';
+    let fe = 'Next.js', feWhy = 'Renderização híbrida: páginas estáticas rápidas e áreas dinâmicas no mesmo projeto.|Hybrid rendering: fast static pages and dynamic areas in one project.';
+    if (pref && pref !== 'Sem preferência') { fe = pref; feWhy = 'Sua preferência declarada.|Your stated preference.'; }
+    else if (kind === 'E-commerce') { fe = 'Next.js + Shopify'; feWhy = 'Catálogo e checkout prontos, vitrine sob seu controle.|Catalogue and checkout out of the box, storefront under your control.'; }
+    else if (!dynamic && (freq === 'Raramente' || freq === 'Algumas vezes por mês')) { fe = 'Astro'; feWhy = 'Conteúdo muda pouco: páginas pré-geradas entregam o melhor tempo de carregamento.|Content rarely changes: pre-generated pages give the best load times.'; }
+    const cms = (a.cms || '').split('|')[0] === 'Ninguém, conteúdo fixo' ? { pick: 'Markdown no repositório', why: 'Conteúdo fixo não justifica um CMS.|Fixed content does not justify a CMS.' } : { pick: 'Sanity', why: 'Edição sem conhecimento técnico, com previsualização.|Non-technical editing, with preview.' };
+    const db = (a.stores || []).length && !has('stores', 'Nada dinâmico') ? { pick: 'PostgreSQL', why: 'Dados relacionais com integridade garantida.|Relational data with guaranteed integrity.' } : { pick: 'Sem banco de dados|No database', why: 'Nada precisa ser guardado; menos custo e menos superfície de ataque.|Nothing needs storing; less cost and less attack surface.' };
+    const items = [
+      { role: 'Frontend', pick: fe, why: feWhy },
+      { role: 'Styling', pick: 'Tailwind CSS', why: 'Consistência de espaçamento e tipografia com pouco CSS próprio.|Consistent spacing and type with little custom CSS.' },
+      { role: 'CMS', pick: cms.pick, why: cms.why },
+      { role: 'Database', pick: this.t(db.pick), why: db.why },
+      { role: 'Hosting', pick: 'Vercel', why: 'Deploy automático, CDN global, previews por branch.|Automatic deploys, global CDN, branch previews.' },
+      { role: 'Analytics', pick: a.track === 'Não|No' ? 'Nenhum|None' : 'Plausible', why: 'Métricas essenciais sem cookies e sem banner.|Essential metrics with no cookies and no banner.' }
+    ];
+    if (a.accounts === 'Sim|Yes') items.splice(4, 0, { role: 'Auth', pick: 'Auth.js', why: 'Login por email e provedores externos com sessões seguras.|Email and provider sign-in with secure sessions.' });
+    return items.map((x) => ({ role: x.role, pick: this.t(x.pick), why: x.why }));
+  };
+
+  renderVals() {
+    const t = this.t, a = this.a(), lang = this.state.lang;
+    const sc = this.state.screen;
+    const narrow = this.state.narrow;
+    const stepIdx = this.state.step;
+    const answered = STEPS.slice(0, -1).filter((s, i) => this.visibleQs(i).some((q) => { const v = a[q.id]; return Array.isArray(v) ? v.length : v; })).length;
+    const pct = Math.round((answered / (STEPS.length - 1)) * 100);
+
+    const cardBase = 'font-family:Archivo; text-align:left; background:#fff; border:1px solid rgba(32,30,29,.3); padding:14px 14px 14px 38px; cursor:pointer; color:#201e1d; position:relative; transition:background .15s, box-shadow .15s';
+
+    const mkOpt = (q, o) => {
+      const raw = typeof o === 'string' ? { t: o } : o;
+      const val = raw.t;
+      const selected = q.multi ? (a[q.id] || []).indexOf(val) > -1 : a[q.id] === val;
+      const idx = q.multi ? (a[q.id] || []).indexOf(val) : -1;
+      return {
+        label: t(val),
+        desc: raw.d ? t(raw.d) : '',
+        selected: selected,
+        mark: q.multi ? (selected ? String(idx + 1) : '') : (selected ? '●' : ''),
+        markStyle: 'position:absolute; left:12px; top:15px; width:17px; height:17px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; line-height:1;' + (q.multi ? 'border:1px solid ' + (selected ? '#4340c4' : 'rgba(32,30,29,.35)') + '; background:' + (selected ? '#4340c4' : '#fff') + '; color:#fff;' : 'border-radius:50%; border:1px solid ' + (selected ? '#4340c4' : 'rgba(32,30,29,.35)') + '; color:#4340c4; font-size:12px;'),
+        cardStyle: cardBase + (selected ? '; box-shadow:inset 0 0 0 2px #4340c4; background:#eeeefb' : '') + (raw.rec ? '; border-style:dashed; background:' + (selected ? '#eeeefb' : 'transparent') : ''),
+        segStyle: 'font-family:Archivo; font-weight:800; font-size:13px; flex:1; min-width:110px; text-align:left; padding:13px 14px; cursor:pointer; border:0; border-right:1px solid rgba(32,30,29,.2); background:' + (selected ? '#4340c4' : 'transparent') + '; color:' + (selected ? '#fff' : '#201e1d'),
+        pick: () => (q.multi ? this.toggle(q.id, val, q.max) : this.set(q.id, val))
+      };
+    };
+
+    const questions = this.visibleQs(stepIdx).map((q) => {
+      const type = q.type || 'cards';
+      const base = {
+        id: q.id,
+        title: t(q.t),
+        help: t(q.help),
+        ex: q.ex ? t(q.ex) : '',
+        ph: q.ph || '',
+        conditional: !!q.cond,
+        conditionalLabel: lang ? 'Because of your last answer' : 'Por causa da sua resposta anterior',
+        isText: type === 'text', isLong: type === 'long', isTags: type === 'tags',
+        isScale: type === 'scale', isCards: type === 'cards',
+        limitNote: q.max ? (lang ? 'Up to ' + q.max + ' — picking a fourth replaces the oldest.' : 'Até ' + q.max + ' — ao marcar o quarto, o mais antigo sai.') : '',
+        gridStyle: 'margin-top:16px; display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(' + (narrow ? 150 : q.cols >= 5 ? 170 : q.cols === 4 ? 190 : q.cols === 3 ? 225 : 300) + 'px, 1fr))',
+        value: a[q.id] || '',
+        onInput: (e) => this.set(q.id, e.target.value),
+        opts: (q.opts || []).map((o) => mkOpt(q, o)),
+        tags: (Array.isArray(a[q.id]) ? a[q.id] : []).map((tag, i) => ({ label: tag, remove: () => this.set(q.id, (a[q.id] || []).filter((_, j) => j !== i)) })),
+        draft: this.state.drafts[q.id] || '',
+        onDraft: (e) => { const v = e.target.value; this.setState((s) => ({ drafts: Object.assign({}, s.drafts, { [q.id]: v }) })); },
+        onKey: (e) => {
+          if (e.key !== 'Enter') return;
+          e.preventDefault();
+          const v = (this.state.drafts[q.id] || '').trim();
+          if (!v) return;
+          this.setState((s) => ({ answers: Object.assign({}, s.answers, { [q.id]: (s.answers[q.id] || []).concat([v]) }), drafts: Object.assign({}, s.drafts, { [q.id]: '' }) }));
+        }
+      };
+      return base;
+    });
+
+    const navSteps = STEPS.map((s, i) => {
+      const done = i < STEPS.length - 1 && this.visibleQs(i).some((q) => { const v = a[q.id]; return Array.isArray(v) ? v.length : v; });
+      const cur = (sc === 'flow' && i === stepIdx) || (sc !== 'flow' && i === STEPS.length - 1);
+      return {
+        num: String(i + 1).padStart(2, '0'),
+        label: t(s.label),
+        go: () => this.go(i),
+        style: 'width:100%; display:flex; align-items:center; gap:12px; font-family:Archivo; font-size:14px; font-weight:' + (cur ? '800' : '400') + '; padding:9px 24px; background:' + (cur ? '#eeeefb' : 'transparent') + '; border:0; border-left:3px solid ' + (cur ? '#4340c4' : 'transparent') + '; cursor:pointer; color:#201e1d; text-align:left',
+        numStyle: 'font-size:11px; font-weight:800; color:' + (cur ? '#4340c4' : '#9b9797') + '; letter-spacing:.06em',
+        tickStyle: 'font-size:12px; color:#4340c4; opacity:' + (done ? '1' : '0')
+      };
+    });
+
+    const rev = (k, keys) => ({
+      title: k,
+      edit: () => this.go(keys.step),
+      rows: keys.rows.filter((r) => r.v && (!Array.isArray(r.v) || r.v.length)).map((r) => ({ k: r.k, v: Array.isArray(r.v) ? r.v.map(t).join(' · ') : t(r.v) }))
+    });
+    const rawRows = [
+      rev(lang ? 'Project' : 'Projeto', { step: 0, rows: [{ k: lang ? 'Name' : 'Nome', v: a.name }, { k: lang ? 'Type' : 'Tipo', v: a.kind }, { k: lang ? 'Existing site' : 'Site atual', v: a.existing }] }),
+      rev(lang ? 'Goals' : 'Objetivos', { step: 1, rows: [{ k: lang ? 'Objectives' : 'Objetivos', v: a.goals }, { k: lang ? 'Main conversion' : 'Conversão', v: a.conversion }] }),
+      rev(lang ? 'Audience' : 'Público', { step: 2, rows: [{ k: lang ? 'Who' : 'Quem', v: a.who }, { k: lang ? 'Reach' : 'Alcance', v: a.reach }, { k: lang ? 'Languages' : 'Idiomas', v: a.langs }, { k: lang ? 'Device' : 'Dispositivo', v: a.device }] }),
+      rev(lang ? 'Content' : 'Conteúdo', { step: 3, rows: [{ k: lang ? 'Readiness' : 'Situação', v: a.contentReady }, { k: lang ? 'Tone' : 'Tom', v: a.tone }, { k: lang ? 'Assets' : 'Materiais', v: a.assets }] }),
+      rev('UI / UX', { step: 4, rows: [{ k: lang ? 'Style' : 'Estilo', v: a.style }, { k: 'Layout', v: a.layout }, { k: lang ? 'Theme' : 'Tema', v: a.theme }] }),
+      rev(lang ? 'Sitemap' : 'Sitemap', { step: 3, rows: [{ k: lang ? 'Pages' : 'Páginas', v: a.pages }] }),
+      rev(lang ? 'Features' : 'Funcionalidades', { step: 5, rows: [{ k: lang ? 'Selected' : 'Selecionadas', v: a.features }, { k: lang ? 'Payments' : 'Pagamentos', v: a.payMethods }] }),
+      rev(lang ? 'Data' : 'Dados', { step: 6, rows: [{ k: lang ? 'Stored' : 'Armazenado', v: a.stores }, { k: lang ? 'Accounts' : 'Contas', v: a.accounts }, { k: lang ? 'Roles' : 'Perfis', v: a.roles }] }),
+      rev('SEO', { step: 8, rows: [{ k: lang ? 'Priority' : 'Prioridade', v: a.seoPriority }, { k: lang ? 'Keywords' : 'Palavras-chave', v: a.keywords }] }),
+      rev(lang ? 'Accessibility' : 'Acessibilidade', { step: 9, rows: [{ k: lang ? 'Target' : 'Meta', v: a.a11y || 'WCAG 2.2 AA' }] }),
+      rev('Performance', { step: 10, rows: [{ k: lang ? 'Priority' : 'Prioridade', v: a.perf }, { k: lang ? 'Media' : 'Mídia', v: a.media }] }),
+      rev(lang ? 'Infrastructure' : 'Infraestrutura', { step: 13, rows: [{ k: lang ? 'Hosting' : 'Hospedagem', v: a.hosting }, { k: lang ? 'Domain' : 'Domínio', v: a.domain }, { k: lang ? 'Launch' : 'Lançamento', v: a.deadline }] })
+    ].filter((c) => c.rows.length);
+
+    return {
+      rootRef: this.attachRoot,
+      isStart: sc === 'start', isApp: sc !== 'start', isFlow: sc === 'flow', isReview: sc === 'review', isBrief: sc === 'brief',
+      wide: !narrow, narrow: narrow,
+      mainStyle: 'flex:1; padding:' + (narrow ? '28px 20px 64px' : '48px 56px 90px') + '; animation:riseIn .25s ease both',
+      langLabel: lang ? 'EN' : 'PT',
+      toggleLang: () => this.setState((s) => ({ lang: s.lang ? 0 : 1 })),
+      startGridStyle: narrow ? 'flex:1; display:flex; flex-direction:column' : 'flex:1; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:0; align-items:stretch',
+      startHeroStyle: (narrow ? 'padding:34px 20px 40px;' : 'padding:72px 56px 56px;') + ' display:flex; flex-direction:column; justify-content:center; max-width:760px',
+      startTitleStyle: 'font-size:' + (narrow ? '31px' : 'clamp(40px,5vw,66px)') + '; line-height:1.04; letter-spacing:-.025em; margin:0 0 ' + (narrow ? '16px' : '24px') + '; text-wrap:balance',
+      startListStyle: (narrow ? 'border-top:2px solid rgba(32,30,29,.4);' : 'border-left:2px solid rgba(32,30,29,.4);') + ' display:flex; flex-direction:column',
+      startKicker: lang ? 'Project brief, without the jargon' : 'Briefing de projeto, sem jargão',
+      startTitle: lang ? 'Describe your website the way you talk about it. Get a developer-ready brief.' : 'Descreva seu site do jeito que você fala sobre ele. Receba um briefing pronto para o desenvolvedor.',
+      startBody: lang ? 'Sixteen short steps of plain questions. No need to know what SSR, headless CMS or Core Web Vitals mean — every technical decision is asked as something you already know the answer to, and "recommend for me" is always available.' : 'Dezesseis etapas curtas de perguntas simples. Não é preciso saber o que significa SSR, CMS headless ou Core Web Vitals — toda decisão técnica é perguntada como algo que você já sabe responder, e "recomende para mim" está sempre disponível.',
+      startCta: lang ? 'Start a brief' : 'Começar um briefing',
+      demoCta: lang ? 'See a filled example' : 'Ver exemplo preenchido',
+      startMeta1: lang ? '≈ 12 minutes' : '≈ 12 minutos',
+      startMeta2: lang ? 'Markdown output' : 'Saída em Markdown',
+      startMeta3: lang ? 'No account needed' : 'Sem cadastro',
+      startSteps: [
+        { n: '01', t: lang ? 'Answer in plain words' : 'Responda em linguagem simples', d: lang ? 'One question per screen, with an example and a way out when you are not sure.' : 'Uma pergunta por tela, com exemplo e uma saída quando você não souber.' },
+        { n: '02', t: lang ? 'The flow adapts' : 'O fluxo se adapta', d: lang ? 'Payments open payment questions. No stored data skips the whole database section.' : 'Pagamentos abrem perguntas de pagamento. Sem dados guardados, a seção de banco some.' },
+        { n: '03', t: lang ? 'Review the blueprint' : 'Revise o blueprint', d: lang ? 'Every answer grouped in cards, each editable in one click.' : 'Cada resposta agrupada em cards, editável em um clique.' },
+        { n: '04', t: lang ? 'Take the Markdown' : 'Leve o Markdown', d: lang ? 'A structured PROJECT_BRIEF.md with a recommended architecture, ready for the first sprint.' : 'Um PROJECT_BRIEF.md estruturado com arquitetura recomendada, pronto para a primeira sprint.' }
+      ],
+      start: () => this.setState({ screen: 'flow', step: 0, answers: {} }),
+      demo: () => this.setState({ screen: 'review', answers: SAMPLE() }),
+      home: () => this.setState({ screen: 'start', answers: {}, step: 0 }),
+      progressLabel: lang ? 'Progress' : 'Progresso',
+      progressPct: pct + '%',
+      progressWidth: pct + '%',
+      restartLabel: lang ? 'Start over' : 'Recomeçar',
+      navSteps: navSteps,
+      stepKicker: t(STEPS[stepIdx].label),
+      stepCounter: (lang ? 'Step ' : 'Etapa ') + (stepIdx + 1) + '/' + STEPS.length,
+      stepTitle: t(STEPS[stepIdx].title),
+      stepIntro: t(STEPS[stepIdx].intro),
+      mobileStepLabel: sc === 'flow' ? t(STEPS[stepIdx].label) + ' · ' + (stepIdx + 1) + '/' + STEPS.length : sc === 'review' ? t(STEPS[STEPS.length - 1].label) + ' · ' + STEPS.length + '/' + STEPS.length : 'PROJECT_BRIEF.md',
+      questions: questions,
+      next: this.next, back: this.back,
+      skip: this.next,
+      nextLabel: stepIdx >= STEPS.length - 2 ? (lang ? 'Review' : 'Revisar') : (lang ? 'Continue' : 'Continuar'),
+      backLabel: lang ? 'Back' : 'Voltar',
+      skipLabel: lang ? 'Skip this step' : 'Pular esta etapa',
+      reviewKicker: lang ? 'Step 16 of 16 · Review' : 'Etapa 16 de 16 · Revisão',
+      reviewIntro: lang ? 'Everything you told us, grouped. Edit anything before generating the brief.' : 'Tudo o que você respondeu, agrupado. Edite o que quiser antes de gerar o briefing.',
+      reviewCards: rawRows,
+      archIntro: lang ? 'Derived from your answers about content frequency, stored data and accounts. Suggestions, not decisions.' : 'Derivado das suas respostas sobre frequência de conteúdo, dados armazenados e contas. São sugestões, não decisões.',
+      archItems: this.arch(),
+      archNote: lang ? 'Any of these can be swapped for an equivalent your team already knows.' : 'Qualquer item pode ser trocado por um equivalente que sua equipe já domine.',
+      generate: () => this.setState({ screen: 'brief' }),
+      briefKicker: lang ? 'Ready to hand over' : 'Pronto para entregar',
+      markdown: this.markdown(),
+      mdMeta: this.markdown().split('\n').length + (lang ? ' lines' : ' linhas'),
+      copyLabel: this.state.copied ? (lang ? 'Copied ✓' : 'Copiado ✓') : 'Copy Markdown',
+      editLabel: lang ? 'Edit answers' : 'Editar respostas',
+      editAnswers: () => this.setState({ screen: 'review' }),
+      copyMd: () => { try { navigator.clipboard.writeText(this.markdown()); } catch (e) {} this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 1800); },
+      downloadMd: () => {
+        const blob = new Blob([this.markdown()], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const el = document.createElement('a');
+        el.href = url; el.download = 'PROJECT_BRIEF.md'; el.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+    };
+  }
+}
+
+function SAMPLE() {
+  return {
+    name: 'Clínica Aurora',
+    kind: 'Site institucional|Company site',
+    existing: 'Sim, será redesenhado|Yes, it will be redesigned',
+    url: 'https://clinicaaurora.com.br',
+    goals: ['Gerar leads|Generate leads', 'Receber reservas|Take bookings', 'Apresentar a marca|Present the brand'],
+    conversion: 'Reserva|Booking',
+    who: 'Pacientes de 30 a 55 anos na região metropolitana, buscando dermatologia estética com atendimento próximo e agenda previsível.',
+    reach: ['Local|Local', 'Regional|Regional'],
+    langs: ['Português|Portuguese', 'Inglês|English'],
+    device: 'Mobile|Mobile',
+    savvy: 'Média|Medium',
+    contentReady: 'Parcialmente|Partially',
+    writer: 'Copywriter|Copywriter',
+    tone: ['Profissional|Professional', 'Amigável|Friendly', 'Premium|Premium'],
+    assets: ['Logo|Logo', 'Fotografias|Photography', 'Depoimentos|Testimonials'],
+    pages: ['Home|Home', 'Sobre|About', 'Serviços|Services', 'Equipe|Team', 'Blog|Blog', 'Contato|Contact', 'Reservas|Booking'],
+    style: 'Minimalista|Minimal',
+    layout: 'Muito clean|Very clean',
+    identity: 'Parcialmente|Partially',
+    theme: 'Claro|Light',
+    refs: ['linear.app', 'clinicbelle.com'],
+    refLikes: ['Layout|Layout', 'Tipografia|Typography', 'Sensação geral|Overall feel'],
+    features: ['Formulário de contato|Contact form', 'Reservas|Bookings', 'Newsletter|Newsletter', 'Mapa|Map', 'Multilíngue|Multilingual'],
+    stores: ['Reservas|Bookings', 'Mensagens|Messages', 'Conteúdo editorial|Editorial content'],
+    accounts: 'Não|No',
+    stack: 'Sem preferência|No preference',
+    freq: 'Algumas vezes por mês|A few times a month',
+    cms: 'Equipe sem conhecimento técnico|A non-technical team',
+    seoPriority: 'Muito importante|Very important',
+    organic: 'Muito|A lot',
+    keywords: ['dermatologia estética', 'botox São Paulo', 'clínica dermatológica'],
+    competitors: ['dermaplus.com.br'],
+    a11y: 'WCAG 2.2 AA|WCAG 2.2 AA',
+    perf: 'Alta|High',
+    media: 'Bastante fotografia|A lot of photography',
+    personal: ['Email|Email', 'Nome|Name', 'Telefone|Phone'],
+    privacy: ['Cookie banner|Cookie banner', 'Política de privacidade|Privacy policy', 'LGPD / GDPR|LGPD / GDPR'],
+    track: 'Sim|Yes',
+    tools: ['Plausible|Plausible', 'Search Console|Search Console'],
+    hosting: 'Não|No',
+    hostPriority: 'Melhor performance|Best performance',
+    domain: 'Sim|Yes',
+    domainName: 'clinicaaurora.com.br',
+    budget: 'Profissional|Professional',
+    deadline: '1–2 meses|1–2 months',
+    maintenance: 'Agência|Agency'
+  };
+}
+
+</script>
+</body>
+</html>
