@@ -7,6 +7,7 @@
 html {
   min-width: 20rem;
   background: var(--color-bg);
+  scroll-behavior: smooth;
 }
 
 body {

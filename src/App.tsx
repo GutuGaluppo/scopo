@@ -1,15 +1,15 @@
 import { BriefScreen } from './components/BriefScreen/BriefScreen'
 import { FlowScreen } from './components/FlowScreen/FlowScreen'
+import { LandingPage } from './components/LandingPage/LandingPage'
 import { MobileHeader } from './components/MobileHeader/MobileHeader'
 import { ReviewScreen } from './components/ReviewScreen/ReviewScreen'
 import { Sidebar } from './components/Sidebar/Sidebar'
-import { StartScreen } from './components/StartScreen/StartScreen'
 import { useBriefBuilder } from './hooks/useBriefBuilder'
 import './app-style.css'
 
 export default function App() {
   const brief = useBriefBuilder()
-  if (brief.screen === 'start') return <StartScreen language={brief.language} onToggleLanguage={brief.toggleLanguage} onStart={brief.start} onDemo={brief.demo} />
+  if (brief.screen === 'start') return <LandingPage language={brief.language} onToggleLanguage={brief.toggleLanguage} onStart={brief.start} onDemo={brief.demo} />
 
   return <div className="app-shell">
     <Sidebar language={brief.language} screen={brief.screen} currentStep={brief.step} answers={brief.answers} progress={brief.progress} onGo={brief.go} onToggleLanguage={brief.toggleLanguage} onHome={brief.home} />
