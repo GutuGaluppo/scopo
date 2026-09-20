@@ -13,10 +13,10 @@ export const steps: Step[] = [
     title: 'Vamos começar pelo básico|Let us start with the basics',
     intro: 'Três perguntas para situar o projeto.|Three questions to frame the project.',
     questions: [
-      { id: 'name', type: 'text', t: 'Qual é o nome do projeto?|What is the project called?', help: 'Pode ser um nome provisório.|A working name is fine.', ph: 'Clínica Aurora' },
+      { id: 'name', type: 'text', t: 'Qual é o nome do projeto?|What is the project called?', help: 'Pode ser um nome provisório.|A working name is fine.', ph: 'Clínica Aurora', hint: 'Use o nome que seus clientes já conhecem, como aparece na fachada ou no Instagram.|Use the name your customers already know, as it appears on your storefront or Instagram.' },
       { id: 'kind', cols: 3, t: 'Que tipo de website você deseja criar?|What kind of website do you want to build?', help: 'Isso define a estrutura de páginas e boa parte das perguntas seguintes.|This shapes the page structure and most of the questions that follow.', opts: ['Site institucional|Company site', 'Landing page|Landing page', 'Portfólio|Portfolio', 'Blog / editorial|Blog / editorial', 'E-commerce|E-commerce', 'SaaS / aplicação web|SaaS / web app', 'Marketplace|Marketplace', 'Diretório|Directory', 'Comunidade|Community', 'Evento|Event', 'Turismo / hotelaria|Travel / hospitality', 'Educação|Education'] },
       { id: 'existing', cols: 2, t: 'Já existe um website hoje?|Is there a website today?', help: '', opts: ['Não|No', 'Sim, será redesenhado|Yes, it will be redesigned', 'Sim, haverá migração|Yes, it will be migrated', 'Apenas uma landing temporária|Only a temporary landing page'] },
-      { id: 'url', type: 'text', t: 'Qual é o endereço atual?|What is the current address?', help: 'Vamos analisar conteúdo, URLs e redirecionamentos.|We will look at content, URLs and redirects.', ph: 'https://exemplo.com', conditional: (a) => Boolean(a.existing && a.existing !== 'Não|No') },
+      { id: 'url', type: 'text', t: 'Qual é o endereço atual?|What is the current address?', help: 'Vamos analisar conteúdo, URLs e redirecionamentos.|We will look at content, URLs and redirects.', ph: 'https://exemplo.com', hint: 'Copie o endereço direto da barra do navegador, incluindo o https://.|Copy the address straight from your browser bar, including the https://.', conditional: (a) => Boolean(a.existing && a.existing !== 'Não|No') },
     ],
   },
   {
@@ -32,7 +32,7 @@ export const steps: Step[] = [
   {
     key: 'audience', label: 'Público|Audience', title: 'Para quem o site é feito|Who the site is for', intro: '',
     questions: [
-      { id: 'who', type: 'long', t: 'Quem é o público principal?|Who is the main audience?', help: 'Descreva com suas palavras.|Describe it in your own words.', ex: 'Ex.: mulheres de 30 a 55 anos na região metropolitana buscando dermatologia estética.|E.g. women 30–55 in the metro area looking for cosmetic dermatology.' },
+      { id: 'who', type: 'long', t: 'Quem é o público principal?|Who is the main audience?', help: 'Descreva com suas palavras.|Describe it in your own words.', ex: 'Ex.: mulheres de 30 a 55 anos na região metropolitana buscando dermatologia estética.|E.g. women 30–55 in the metro area looking for cosmetic dermatology.', hint: 'Quanto mais concreto, melhor: idade aproximada, onde a pessoa vive e o que ela procura.|The more concrete the better: approximate age, where the person lives and what they are looking for.' },
       { id: 'reach', multi: true, cols: 4, t: 'Onde esse público está?|Where is this audience?', help: 'Isso influencia idiomas, CDN e SEO local.|This affects languages, CDN and local SEO.', opts: ['Local|Local', 'Regional|Regional', 'Nacional|National', 'Internacional|International'] },
       { id: 'langs', multi: true, cols: 4, t: 'Quais idiomas o site precisa ter?|Which languages does the site need?', help: '', opts: ['Português|Portuguese', 'Inglês|English', 'Espanhol|Spanish', 'Alemão|German', 'Francês|French', 'Outro|Other'] },
       { id: 'device', cols: 4, t: 'Qual dispositivo será mais usado?|Which device will be used most?', help: '', opts: ['Mobile|Mobile', 'Desktop|Desktop', 'Aproximadamente igual|Roughly equal', recommend] },
@@ -56,7 +56,7 @@ export const steps: Step[] = [
       { id: 'layout', cols: 3, t: 'Que tipo de layout?|What kind of layout?', help: '', opts: ['Muito clean|Very clean', 'Visual / imersivo|Visual / immersive', 'Editorial|Editorial', 'Conteúdo denso|Dense content', 'Dashboard|Dashboard', 'Experimental|Experimental'] },
       { id: 'identity', cols: 3, t: 'Já existe identidade visual?|Is there an existing visual identity?', help: '', opts: ['Sim, completa|Yes, complete', 'Parcialmente|Partially', 'Não|No'] },
       { id: 'theme', cols: 5, t: 'Tema da interface|Interface theme', help: '', opts: ['Claro|Light', 'Escuro|Dark', 'Ambos|Both', 'Automático|Automatic', 'Não definido|Undecided'] },
-      { id: 'refs', type: 'tags', t: 'Sites de referência|Reference sites', help: 'Cole endereços de sites que você admira. Depois marcamos o que agrada em cada um.|Paste addresses of sites you admire. We will tag what you like about each.', ph: 'stripe.com  ⏎' },
+      { id: 'refs', type: 'tags', t: 'Sites de referência|Reference sites', help: 'Cole endereços de sites que você admira. Depois marcamos o que agrada em cada um.|Paste addresses of sites you admire. We will tag what you like about each.', ph: 'stripe.com  ⏎', hint: 'Digite o endereço de um site e pressione Enter para adicionar. Repita para incluir outros — de 2 a 5 já ajuda bastante.|Type a site address and press Enter to add it. Repeat to add more — 2 to 5 is already plenty.' },
       { id: 'refLikes', multi: true, cols: 4, t: 'O que te agrada nessas referências?|What do you like in those references?', help: '', opts: ['Layout|Layout', 'Tipografia|Typography', 'Cores|Color', 'Navegação|Navigation', 'Animações|Motion', 'Conteúdo|Content', 'Fotografia|Photography', 'Sensação geral|Overall feel'] },
     ],
   },
@@ -89,8 +89,8 @@ export const steps: Step[] = [
     questions: [
       { id: 'seoPriority', type: 'scale', t: 'Qual a prioridade de SEO?|How much of a priority is SEO?', help: '', opts: ['Baixa|Low', 'Importante|Important', 'Muito importante|Very important', 'Essencial|Essential'] },
       { id: 'organic', cols: 4, t: 'O projeto depende de tráfego orgânico?|Does the project depend on organic traffic?', help: 'Se a maior parte dos clientes chega pela busca, mudam prioridades técnicas.|If most customers arrive via search, technical priorities change.', opts: ['Muito|A lot', 'Parcialmente|Partly', 'Pouco|Little', recommend] },
-      { id: 'keywords', type: 'tags', t: 'Existem palavras-chave importantes?|Are there important keywords?', help: 'Termos que as pessoas digitam para encontrar você.|Terms people type to find you.', ph: 'dermatologia estética  ⏎' },
-      { id: 'competitors', type: 'tags', t: 'Concorrentes conhecidos|Known competitors', help: '', ph: 'concorrente.com  ⏎' },
+      { id: 'keywords', type: 'tags', t: 'Existem palavras-chave importantes?|Are there important keywords?', help: 'Termos que as pessoas digitam para encontrar você.|Terms people type to find you.', ph: 'dermatologia estética  ⏎', hint: 'Escreva uma expressão e pressione Enter. Pense no que você digitaria no Google para se encontrar.|Type a phrase and press Enter. Think of what you would type into Google to find yourself.' },
+      { id: 'competitors', type: 'tags', t: 'Concorrentes conhecidos|Known competitors', help: '', ph: 'concorrente.com  ⏎', hint: 'Digite o endereço do site de um concorrente e pressione Enter. Se não conhecer nenhum, pode deixar em branco.|Type a competitor site address and press Enter. If you do not know any, leave it blank.' },
     ],
   },
   {
@@ -131,7 +131,7 @@ export const steps: Step[] = [
     key: 'domain', label: 'Domínio|Domain', title: 'Domínio, orçamento e prazo|Domain, budget and timeline', intro: '',
     questions: [
       { id: 'domain', cols: 3, t: 'Já possui domínio?|Do you already have a domain?', help: '', opts: ['Sim|Yes', 'Não|No', 'Quero ajuda para escolher|I want help choosing'] },
-      { id: 'domainName', type: 'text', t: 'Qual é o domínio?|What is the domain?', help: '', ph: 'exemplo.com', conditional: (a) => a.domain === 'Sim|Yes' },
+      { id: 'domainName', type: 'text', t: 'Qual é o domínio?|What is the domain?', help: '', ph: 'exemplo.com', hint: 'Só o endereço, sem https:// nem barras no final. Ex.: minhaempresa.com.br|Just the address, without https:// or trailing slashes. E.g. mycompany.com', conditional: (a) => a.domain === 'Sim|Yes' },
       { id: 'budget', cols: 3, t: 'Qual faixa de orçamento?|What budget range?', help: 'Opcional. Serve para calibrar escopo, não para cobrar.|Optional. It calibrates scope, not price.', opts: ['Projeto experimental|Experimental', 'Baixo orçamento|Low budget', 'Médio|Medium', 'Profissional|Professional', 'Premium|Premium', 'Ainda não definido|Not defined yet'] },
       { id: 'deadline', cols: 5, t: 'Quando você gostaria de lançar?|When would you like to launch?', help: '', opts: ['2–4 semanas|2–4 weeks', '1–2 meses|1–2 months', '3–6 meses|3–6 months', 'Mais de 6 meses|More than 6 months', 'Sem prazo|No deadline'] },
       { id: 'maintenance', cols: 5, t: 'Quem manterá o site depois do lançamento?|Who will maintain the site after launch?', help: '', opts: ['Cliente|Client', 'Desenvolvedor|Developer', 'Agência|Agency', 'Equipe interna|In-house team', 'Não definido|Not defined'] },

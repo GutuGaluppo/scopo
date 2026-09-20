@@ -15,6 +15,8 @@ export function QuestionField({ question, value, language, onSet, onToggle }: Pr
   const [draft, setDraft] = useState('')
   const type = question.type || 'cards'
   const en = language === 1
+  const hintId = question.hint ? `hint-${question.id}` : undefined
+  const inputProps = { 'aria-labelledby': `question-${question.id}`, 'aria-describedby': hintId }
   const selected = (option: string) => question.multi ? Array.isArray(value) && value.includes(option) : value === option
   const addTag = () => {
     const tag = draft.trim()
@@ -30,12 +32,13 @@ export function QuestionField({ question, value, language, onSet, onToggle }: Pr
     {question.help && <p className="question-field__help">{translate(question.help, language)}</p>}
     {question.ex && <p className="question-field__example">{translate(question.ex, language)}</p>}
 
-    {type === 'text' && <input className="question-field__input" value={typeof value === 'string' ? value : ''} onChange={(event) => onSet(event.target.value)} placeholder={question.ph} />}
-    {type === 'long' && <textarea className="question-field__input question-field__textarea" rows={4} value={typeof value === 'string' ? value : ''} onChange={(event) => onSet(event.target.value)} placeholder={question.ph} />}
+    {type === 'text' && <input {...inputProps} className="question-field__input" value={typeof value === 'string' ? value : ''} onChange={(event) => onSet(event.target.value)} placeholder={question.ph} />}
+    {type === 'long' && <textarea {...inputProps} className="question-field__input question-field__textarea" rows={4} value={typeof value === 'string' ? value : ''} onChange={(event) => onSet(event.target.value)} placeholder={question.ph} />}
     {type === 'tags' && <div className="question-field__tags">
       <div className="question-field__tag-list">{(Array.isArray(value) ? value : []).map((tag) => <span key={tag}>{tag}<button onClick={() => onSet((value as string[]).filter((item) => item !== tag))} aria-label={`${en ? 'Remove' : 'Remover'} ${tag}`}>×</button></span>)}</div>
-      <input className="question-field__input" value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); addTag() } }} onBlur={addTag} placeholder={question.ph} />
+      <input {...inputProps} className="question-field__input" value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); addTag() } }} onBlur={addTag} placeholder={question.ph} />
     </div>}
+    {question.hint && type !== 'cards' && type !== 'scale' && <p id={hintId} className="question-field__hint"><span aria-hidden="true">i</span>{translate(question.hint, language)}</p>}
     {(type === 'cards' || type === 'scale') && <div className={`question-field__options question-field__options--${type} question-field__options--cols-${question.cols || 3}`}>
       {(question.opts || []).map((rawOption) => {
         const option = typeof rawOption === 'string' ? { t: rawOption } : rawOption as RichOption

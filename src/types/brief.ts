@@ -19,6 +19,7 @@ export interface Question {
   help: string
   ex?: string
   ph?: string
+  hint?: string
   opts?: QuestionOption[]
   multi?: boolean
   max?: number
