@@ -1,5 +1,5 @@
 .brief-screen { flex: 1; padding: 3rem 3.5rem 5.5rem; animation: rise-in 250ms ease both; }
-.brief-screen__inner { max-width: 56.25rem; }
+.brief-screen__inner { max-width: 56.25rem; margin-inline: auto; }
 .brief-screen__header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.125rem; }
 .brief-screen__header p { margin: 0 0 0.5rem; color: var(--color-accent); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
 .brief-screen__header h1 { margin: 0; font-size: 2.125rem; letter-spacing: -0.02em; }
