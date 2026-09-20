@@ -1,4 +1,4 @@
-import { allNavigationSteps, steps } from '../../data/steps'
+import { allNavigationSteps } from '../../data/steps'
 import { translate } from '../../domain/i18n'
 import type { Language, Screen } from '../../types/brief'
 import './mobile-header-style.css'

@@ -94,7 +94,6 @@ export function useBriefBuilder() {
     ...state,
     visibleQuestions,
     progress,
-    completedSteps,
     toggleLanguage: () => dispatch({ type: 'toggle-language' }),
     start: () => dispatch({ type: 'start' }),
     demo: () => dispatch({ type: 'demo' }),
