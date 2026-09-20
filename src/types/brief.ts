@@ -35,6 +35,17 @@ export interface Step {
   questions: Question[]
 }
 
+export interface GuideItem {
+  title: string
+  explain: string
+  example: string
+}
+
+export interface StepGuide {
+  intro: string
+  items: GuideItem[]
+}
+
 export interface ArchitectureItem {
   role: string
   pick: string
