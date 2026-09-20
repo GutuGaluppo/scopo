@@ -1,0 +1,17 @@
+.brief-screen { flex: 1; padding: 3rem 3.5rem 5.5rem; animation: rise-in 250ms ease both; }
+.brief-screen__inner { max-width: 56.25rem; }
+.brief-screen__header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.125rem; }
+.brief-screen__header p { margin: 0 0 0.5rem; color: var(--color-accent); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.brief-screen__header h1 { margin: 0; font-size: 2.125rem; letter-spacing: -0.02em; }
+.brief-screen__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.brief-screen__actions button { padding: 0.7rem 1rem; border: 0.0625rem solid var(--color-border); border-radius: 0; background: transparent; font-size: 0.8125rem; font-weight: 800; cursor: pointer; }
+.brief-screen__actions .brief-screen__copy { border-color: var(--color-accent); background: var(--color-accent); color: white; }
+.brief-screen__actions .brief-screen__copy:hover { background: var(--color-accent-dark); }
+.brief-screen__actions .brief-screen__home { border-color: transparent; color: var(--color-text-soft); }
+.brief-screen__document { border: 0.0625rem solid var(--color-border); background: var(--color-surface); }
+.brief-screen__document > div { display: flex; align-items: center; gap: 0.625rem; padding: 0.625rem 0.875rem; border-bottom: 0.0625rem solid var(--color-border); background: var(--color-surface-muted); }
+.brief-screen__document > div span { width: 0.5625rem; height: 0.5625rem; background: var(--color-accent); }
+.brief-screen__document > div strong { font-size: 0.75rem; letter-spacing: 0.06em; }
+.brief-screen__document > div small { margin-left: auto; color: var(--color-text-muted); }
+.brief-screen__document pre { max-height: 40rem; overflow: auto; margin: 0; padding: 1.625rem 1.75rem; color: var(--color-text); font: 0.84375rem/1.75 ui-monospace, 'SFMono-Regular', Consolas, monospace; white-space: pre-wrap; word-break: break-word; }
+@media (max-width: 53.75rem) { .brief-screen { padding: 1.75rem 1.25rem 4rem; } .brief-screen__header { align-items: flex-start; } .brief-screen__document pre { padding: 1.25rem; } }

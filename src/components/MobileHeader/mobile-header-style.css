@@ -1,0 +1,8 @@
+.mobile-header { display: none; position: sticky; top: 0; z-index: 10; padding: 0.75rem 1.125rem; border-bottom: 0.125rem solid var(--color-divider); background: var(--color-bg); }
+.mobile-header__row { display: grid; grid-template-columns: 2rem 1fr 2.75rem; align-items: center; gap: 0.5rem; margin-bottom: 0.625rem; }
+.mobile-header__row > button { border: 0; background: transparent; font-weight: 800; cursor: pointer; }
+.mobile-header__row strong { overflow: hidden; font-size: 0.75rem; letter-spacing: 0.08em; text-align: center; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.mobile-header__row .mobile-header__language { padding: 0.25rem 0.5rem; border: 0.0625rem solid var(--color-border); font-size: 0.6875rem; }
+.mobile-header__progress { height: 0.25rem; background: rgba(32, 30, 29, 0.15); }
+.mobile-header__progress span { display: block; height: 100%; background: var(--color-accent); transition: width 300ms ease; }
+@media (max-width: 53.75rem) { .mobile-header { display: block; } }
