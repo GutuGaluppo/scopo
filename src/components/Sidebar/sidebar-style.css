@@ -16,6 +16,7 @@
 .sidebar__tick--visible { opacity: 1; }
 .sidebar__footer { display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 1.5rem; border-top: 0.0625rem solid rgba(32, 30, 29, 0.18); }
 .sidebar__footer button { border: 0.0625rem solid var(--color-border); padding: 0.4rem 0.65rem; background: transparent; font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+.sidebar__footer .language-select { padding: 0.35rem 1.75rem 0.35rem 0.65rem; letter-spacing: normal; text-transform: none; }
 .sidebar__footer .sidebar__restart { border: 0; color: var(--color-text-soft); }
 .sidebar__footer button:hover { color: var(--color-accent); }
 @media (max-width: 53.75rem) { .sidebar { display: none; } }

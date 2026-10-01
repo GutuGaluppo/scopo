@@ -3,19 +3,20 @@ import { sampleAnswers } from '../../data/sample'
 import { steps } from '../../data/steps'
 import { translate } from '../../domain/i18n'
 import { generateMarkdown } from '../../domain/markdown'
+import { LanguageSelect } from '../LanguageSelect/LanguageSelect'
 import type { Language } from '../../types/brief'
 import './landing-page-style.css'
 
 interface Props {
   language: Language
-  onToggleLanguage: () => void
+  onLanguageChange: (language: Language) => void
   onStart: () => void
   onDemo: () => void
 }
 
 const PREVIEW_LINES = 22
 
-export function LandingPage({ language, onToggleLanguage, onStart, onDemo }: Props) {
+export function LandingPage({ language, onLanguageChange, onStart, onDemo }: Props) {
   const en = language === 1
   const previewText = generateMarkdown(sampleAnswers, language).split('\n').slice(0, PREVIEW_LINES).join('\n')
 
@@ -29,7 +30,7 @@ export function LandingPage({ language, onToggleLanguage, onStart, onDemo }: Pro
           <a href="#result">{en ? 'What you get' : 'O que você recebe'}</a>
         </nav>
         <div className="landing__header-actions">
-          <button className="landing__language" onClick={onToggleLanguage}>{en ? 'EN' : 'PT'}</button>
+          <LanguageSelect language={language} onChange={onLanguageChange} />
           <button className="landing__header-cta" onClick={onStart}>{en ? 'Start' : 'Começar'}</button>
         </div>
       </header>

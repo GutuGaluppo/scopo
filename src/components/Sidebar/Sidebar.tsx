@@ -1,5 +1,6 @@
 import { allNavigationSteps, steps } from '../../data/steps'
 import { translate } from '../../domain/i18n'
+import { LanguageSelect } from '../LanguageSelect/LanguageSelect'
 import type { Answers, Language, Screen } from '../../types/brief'
 import './sidebar-style.css'
 
@@ -10,11 +11,11 @@ interface Props {
   answers: Answers
   progress: number
   onGo: (step: number) => void
-  onToggleLanguage: () => void
+  onLanguageChange: (language: Language) => void
   onHome: () => void
 }
 
-export function Sidebar({ language, screen, currentStep, answers, progress, onGo, onToggleLanguage, onHome }: Props) {
+export function Sidebar({ language, screen, currentStep, answers, progress, onGo, onLanguageChange, onHome }: Props) {
   const en = language === 1
   const isComplete = (index: number) => index < steps.length && steps[index].questions.some((question) => {
     const answer = answers[question.id]
@@ -38,7 +39,7 @@ export function Sidebar({ language, screen, currentStep, answers, progress, onGo
         })}
       </nav>
       <footer className="sidebar__footer">
-        <button onClick={onToggleLanguage}>{en ? 'EN' : 'PT'}</button>
+        <LanguageSelect language={language} onChange={onLanguageChange} />
         <button className="sidebar__restart" onClick={onHome}>{en ? 'Start over' : 'Recomeçar'}</button>
       </footer>
     </aside>

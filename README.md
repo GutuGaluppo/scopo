@@ -27,7 +27,7 @@ Brief Builder é um formulário guiado que transforma respostas em linguagem sim
 - **Blueprint revisável:** todas as respostas agrupadas por tema, com edição direta antes de gerar o documento.
 - **Arquitetura recomendada,** derivada das respostas (frontend, CMS, banco de dados, hospedagem, autenticação, analytics).
 - **Exportação em Markdown:** copiar ou baixar o `PROJECT_BRIEF.md`.
-- **Português e inglês,** com troca de idioma em qualquer tela.
+- **Português e inglês,** disponíveis em um menu de seleção de idioma em qualquer tela.
 - **Progresso salvo no navegador** (`localStorage`); as respostas não são enviadas a nenhum servidor.
 - **Responsivo,** com cabeçalho e modal adaptados ao celular.
 

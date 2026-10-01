@@ -13,7 +13,7 @@ interface State {
 }
 
 type Action =
-  | { type: 'toggle-language' }
+  | { type: 'set-language'; language: Language }
   | { type: 'start' }
   | { type: 'demo' }
   | { type: 'home' }
@@ -43,7 +43,7 @@ function restoreState(): State {
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'toggle-language': return { ...state, language: state.language === 0 ? 1 : 0 }
+    case 'set-language': return { ...state, language: action.language }
     case 'start': return { ...state, screen: 'flow', step: 0, answers: {} }
     case 'demo': return { ...state, screen: 'review', answers: sampleAnswers }
     case 'home': return initialState
@@ -94,7 +94,7 @@ export function useBriefBuilder() {
     ...state,
     visibleQuestions,
     progress,
-    toggleLanguage: () => dispatch({ type: 'toggle-language' }),
+    setLanguage: (language: Language) => dispatch({ type: 'set-language', language }),
     start: () => dispatch({ type: 'start' }),
     demo: () => dispatch({ type: 'demo' }),
     home: () => dispatch({ type: 'home' }),

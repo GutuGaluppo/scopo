@@ -1,0 +1,2 @@
+.language-select { min-height: 2rem; padding: 0.35rem 1.75rem 0.35rem 0.65rem; border: 0.0625rem solid var(--color-border); border-radius: 0; background: var(--color-bg); color: var(--color-text); font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+.language-select:hover { background: rgba(32, 30, 29, 0.07); }

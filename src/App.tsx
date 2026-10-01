@@ -9,12 +9,12 @@ import './app-style.css'
 
 export default function App() {
   const brief = useBriefBuilder()
-  if (brief.screen === 'start') return <LandingPage language={brief.language} onToggleLanguage={brief.toggleLanguage} onStart={brief.start} onDemo={brief.demo} />
+  if (brief.screen === 'start') return <LandingPage language={brief.language} onLanguageChange={brief.setLanguage} onStart={brief.start} onDemo={brief.demo} />
 
   return <div className="app-shell">
-    <Sidebar language={brief.language} screen={brief.screen} currentStep={brief.step} answers={brief.answers} progress={brief.progress} onGo={brief.go} onToggleLanguage={brief.toggleLanguage} onHome={brief.home} />
+    <Sidebar language={brief.language} screen={brief.screen} currentStep={brief.step} answers={brief.answers} progress={brief.progress} onGo={brief.go} onLanguageChange={brief.setLanguage} onHome={brief.home} />
     <div className="app-shell__content">
-      <MobileHeader language={brief.language} screen={brief.screen} currentStep={brief.step} progress={brief.progress} onBack={brief.back} onToggleLanguage={brief.toggleLanguage} />
+      <MobileHeader language={brief.language} screen={brief.screen} currentStep={brief.step} progress={brief.progress} onBack={brief.back} onLanguageChange={brief.setLanguage} />
       {brief.screen === 'flow' && <FlowScreen language={brief.language} step={brief.step} answers={brief.answers} questions={brief.visibleQuestions} onSet={brief.setAnswer} onToggle={brief.toggleAnswer} onNext={brief.next} onBack={brief.back} />}
       {brief.screen === 'review' && <ReviewScreen language={brief.language} answers={brief.answers} onEdit={brief.go} onGenerate={brief.showBrief} onBack={brief.back} />}
       {brief.screen === 'brief' && <BriefScreen language={brief.language} answers={brief.answers} onEdit={brief.review} onHome={brief.home} />}
